@@ -3,12 +3,15 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
+import { MoviesService } from './movies.service';
+import { Movie } from './entities/movie.entity';
 
 @Controller('movies')
 export class MoviesController {
@@ -35,9 +38,6 @@ export class MoviesController {
 
   @Patch(':id')
   path(@Param('id') movieId: string, @Body() updateData) {
-    return {
-      updatedMovie: movieId,
-      updateData,
-    };
+    return this.moviesService.update(movieId, updateData);
   }
 }
